@@ -1,0 +1,35 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mehyaa.Arduino.OTAServer.Web", "src\Mehyaa.Arduino.OTAServer.Web\Mehyaa.Arduino.OTAServer.Web.csproj", "{A8BBF993-D743-4DC7-BCD4-5FA22AF2BA45}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{BA912DB4-02BF-4CBF-B447-ABDB9B0EB2B6}"
+ProjectSection(SolutionItems) = preProject
+	.dockerignore = .dockerignore
+	.gitattributes = .gitattributes
+	.gitignore = .gitignore
+EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mehyaa.Arduino.OTAServer.Abstractions", "src\Mehyaa.Arduino.OTAServer.Abstractions\Mehyaa.Arduino.OTAServer.Abstractions.csproj", "{EC70D1A6-1CD0-4B7F-AA29-E8DCAAAA0C68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mehyaa.Arduino.OTAServer.Data", "src\Mehyaa.Arduino.OTAServer.Data\Mehyaa.Arduino.OTAServer.Data.csproj", "{991CEB97-E3EA-49B9-9AF8-091C0F0304CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8BBF993-D743-4DC7-BCD4-5FA22AF2BA45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8BBF993-D743-4DC7-BCD4-5FA22AF2BA45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8BBF993-D743-4DC7-BCD4-5FA22AF2BA45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8BBF993-D743-4DC7-BCD4-5FA22AF2BA45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC70D1A6-1CD0-4B7F-AA29-E8DCAAAA0C68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC70D1A6-1CD0-4B7F-AA29-E8DCAAAA0C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC70D1A6-1CD0-4B7F-AA29-E8DCAAAA0C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC70D1A6-1CD0-4B7F-AA29-E8DCAAAA0C68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{991CEB97-E3EA-49B9-9AF8-091C0F0304CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{991CEB97-E3EA-49B9-9AF8-091C0F0304CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{991CEB97-E3EA-49B9-9AF8-091C0F0304CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{991CEB97-E3EA-49B9-9AF8-091C0F0304CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
