@@ -10,7 +10,7 @@ namespace Mehyaa.Arduino.OTAServer.Data.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+
             #region Device
 
             modelBuilder.Entity<Device>(b =>
@@ -27,8 +27,8 @@ namespace Mehyaa.Arduino.OTAServer.Data.Contexts
             });
 
             #endregion
-            
-            #region Device
+
+            #region Firmware
 
             modelBuilder.Entity<Firmware>(b =>
             {
