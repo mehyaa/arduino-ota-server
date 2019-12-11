@@ -7,7 +7,6 @@ using Microsoft.Net.Http.Headers;
 using System;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Mehyaa.Arduino.OTAServer.Web.Controllers
@@ -34,14 +33,12 @@ namespace Mehyaa.Arduino.OTAServer.Web.Controllers
 
             if (!string.Equals(userAgent, Esp8266UserAgent, StringComparison.InvariantCultureIgnoreCase))
             {
-                _logger.LogWarning("Device is not ESP8266.");
+                _logger.LogWarning("Device is not an ESP8266.");
 
                 Response.StatusCode = (int) HttpStatusCode.Forbidden;
 
-                return Content("403 Forbidden", "text/plain");
+                return Content("Device is not an ESP8266.", "text/plain");
             }
-
-            var deviceMacAddress = Request.Headers["x-ESP8266-STA-MAC"].ToString();
 
             if (!Request.Headers.ContainsKey("x-ESP8266-Chip-ID") ||
                 !Request.Headers.ContainsKey("x-ESP8266-STA-MAC") ||
@@ -57,8 +54,10 @@ namespace Mehyaa.Arduino.OTAServer.Web.Controllers
 
                 Response.StatusCode = (int) HttpStatusCode.Forbidden;
 
-                return Content("403 Forbidden", "text/plain");
+                return Content("Device headers are absent.", "text/plain");
             }
+
+            var deviceMacAddress = Request.Headers["x-ESP8266-STA-MAC"].ToString();
 
             var device =
                 await _otaContext.Set<Device>()
@@ -67,22 +66,22 @@ namespace Mehyaa.Arduino.OTAServer.Web.Controllers
 
             if (device == null)
             {
-                _logger.LogWarning($"No device found with MAC: {deviceMacAddress}");
+                _logger.LogWarning($"Device does not exist with MAC: {deviceMacAddress}");
 
-                Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                Response.StatusCode = (int) HttpStatusCode.BadRequest;
 
-                return Content("500 Device Not Found", "text/plain");
+                return Content("Device does not exist.", "text/plain");
             }
 
             var firmware = device.Firmwares.OrderByDescending(x => x.Id).FirstOrDefault();
 
             if (firmware == null)
             {
-                _logger.LogWarning($"No device firmware found for DeviceId: {device.Id}");
+                _logger.LogWarning($"Device firmware does not exist for DeviceId: {device.Id}");
 
-                Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                Response.StatusCode = (int) HttpStatusCode.BadRequest;
 
-                return Content("500 Device Firmware Not Found", "text/plain");
+                return Content("Device firmware does not exist.", "text/plain");
             }
 
             var deviceSketchHash = Request.Headers["x-ESP8266-sketch-md5"].ToString();
@@ -94,12 +93,9 @@ namespace Mehyaa.Arduino.OTAServer.Web.Controllers
                 return Content("304 Not Modified", "text/plain");
             }
 
-            using (var md5 = MD5.Create())
-            {
-                await using var stream = System.IO.File.OpenRead(firmware.Path);
+            _logger.LogInformation($"FirmwareId: {firmware.Id} returned to the device with MAC: {deviceMacAddress}");
 
-                Response.Headers["x-MD5"] = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", string.Empty);
-            }
+            Response.Headers["x-MD5"] = firmware.Hash;
 
             return PhysicalFile(firmware.Path, "application/octet-stream", firmware.Filename);
         }
